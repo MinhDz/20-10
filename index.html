@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gửi Bạn Ngày 20/10 Dịu Dàng 🌸</title>
+    
+    <!-- Meta SEO & Open Graph for Social Sharing (Facebook, Zalo, Telegram) -->
+    <meta name="description" content="Một góc nhỏ ấm áp và những lời chúc bình dị gửi đến những người phụ nữ tuyệt vời nhân ngày 20/10.">
+    <meta property="og:title" content="20/10 Thật Bình Yên Và Rạng Rỡ Nhé 🌸">
+    <meta property="og:description" content="Chạm nhẹ để mở phong thư và nhận một nhành hoa cùng lời chúc ấm áp dành riêng cho bạn.">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+
+    <!-- Google Fonts: Nhẹ nhàng, trang nhã, hỗ trợ tiếng Việt mượt mà -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Canvas hiệu ứng cánh hoa bay lãng đãng -->
+    <canvas id="petal-canvas"></canvas>
+
+    <!-- Các nút điều khiển góc trên (Bật/Tắt nhạc, Thả thêm hoa, Toàn màn hình) -->
+    <div class="top-nav">
+        <button id="btn-music" class="nav-btn" title="Bật / Tắt âm nhạc" aria-label="Bật/Tắt âm nhạc">
+            <span class="icon-music">♫</span>
+            <span class="btn-label">Âm nhạc</span>
+        </button>
+        <button id="btn-bloom" class="nav-btn" title="Gieo thêm cánh hoa" aria-label="Gieo hoa">
+            <span class="icon-flower">🌸</span>
+            <span class="btn-label">Gieo hoa</span>
+        </button>
+    </div>
+
+    <!-- MÀN HÌNH MỞ ĐẦU: PHONG THƯ DỊU DÀNG (INTRO SCREEN) -->
+    <div id="intro-overlay" class="intro-overlay">
+        <div class="intro-box">
+            <div class="intro-stamp">
+                <span class="stamp-icon">🕊️</span>
+                <span class="stamp-date">20 • 10</span>
+            </div>
+            <div class="intro-tag">MỘT MÓN QUÀ NHỎ</div>
+            <h1 class="intro-title" id="intro-recipient-text">Gửi người phụ nữ tuyệt vời</h1>
+            <p class="intro-subtitle">Có một phong thư bình yên đang đợi bạn mở ra giữa những ngày thu dịu mát...</p>
+            
+            <div class="envelope-wrapper" id="envelope-trigger" role="button" tabindex="0" aria-label="Chạm để mở phong thư">
+                <div class="envelope">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-pocket"></div>
+                    <div class="envelope-letter-peek">
+                        <span>🌸 Lời chúc 20/10</span>
+                    </div>
+                    <div class="wax-seal">
+                        <span>✿</span>
+                    </div>
+                </div>
+                <div class="tap-guide">
+                    <span class="hand-icon">👉</span> Chạm vào phong thư để mở nhé
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NỘI DUNG CHÍNH (MAIN WRAPPER) -->
+    <main class="main-container" id="main-content" style="display: none;">
+        
+        <!-- Header chính -->
+        <header class="hero-section">
+            <div class="badge-pill">Ngày Phụ Nữ Việt Nam 20/10</div>
+            <h1 class="main-headline" id="main-greeting-title">Chúc Bạn Luôn An Yên & Rạng Rỡ</h1>
+            <p class="main-subtext" id="main-personalized-note">
+                Dù bạn là ai, đang ở đâu, mong bạn hôm nay được thảnh thơi mỉm cười, thưởng thức tách trà ấm và cảm nhận trọn vẹn sự yêu thương.
+            </p>
+        </header>
+
+        <!-- Thanh chọn nhóm đối tượng (Tabs) -->
+        <section class="category-section">
+            <div class="category-scroll">
+                <button class="cat-pill active" data-category="all">
+                    <span>✨</span> Tất cả
+                </button>
+                <button class="cat-pill" data-category="mom">
+                    <span>🌸</span> Cho Mẹ
+                </button>
+                <button class="cat-pill" data-category="lover">
+                    <span>🌹</span> Cho "Người ấy"
+                </button>
+                <button class="cat-pill" data-category="friends">
+                    <span>🌷</span> Chị Em & Bạn bè
+                </button>
+                <button class="cat-pill" data-category="colleague">
+                    <span>🌼</span> Đồng nghiệp
+                </button>
+                <button class="cat-pill" data-category="self">
+                    <span>🌻</span> Cho chính mình
+                </button>
+            </div>
+        </section>
+
+        <!-- Danh sách thẻ lời chúc dạng bưu thiếp nhẹ nhàng -->
+        <section class="cards-grid" id="cards-container">
+            <!-- Render động bằng Javascript -->
+        </section>
+
+        <!-- Hộp tương tác: Rút quẻ may mắn & Tạo thiệp riêng -->
+        <section class="action-dock">
+            <div class="dock-card">
+                <div class="dock-icon">🔮</div>
+                <div class="dock-info">
+                    <h3>Thông điệp ngẫu nhiên hôm nay</h3>
+                    <p>Bốc một quẻ nhỏ mang niềm vui bất ngờ cho ngày 20/10</p>
+                </div>
+                <button class="dock-btn" id="btn-random-wish">
+                    Rút quẻ 🎁
+                </button>
+            </div>
+
+            <div class="dock-card">
+                <div class="dock-icon">✍️</div>
+                <div class="dock-info">
+                    <h3>Tự tạo thiệp & Tải ảnh</h3>
+                    <p>Gõ tên người nhận, tạo link riêng hoặc lưu ảnh gửi Zalo/Facebook</p>
+                </div>
+                <button class="dock-btn secondary" id="btn-open-creator">
+                    Tạo thiệp ngay 💌
+                </button>
+            </div>
+        </section>
+
+        <!-- Footer ấm áp -->
+        <footer class="page-footer">
+            <div class="footer-divider">✻ ✻ ✻</div>
+            <p class="footer-text">Gửi trọn tấm lòng đến những người phụ nữ Việt Nam dịu dàng và kiên cường.</p>
+            <p class="footer-sub">Chúc bạn 365 ngày trong năm đều được trân quý và hạnh phúc.</p>
+        </footer>
+    </main>
+
+    <!-- MODAL HIỂN THỊ CHI TIẾT LỜI CHÚC -->
+    <div id="wish-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-sheet">
+            <button class="modal-close" id="modal-close-btn" aria-label="Đóng">&times;</button>
+            
+            <div class="modal-floral-header">
+                <span class="modal-flower-icon" id="modal-flower">🌸</span>
+                <span class="modal-category-badge" id="modal-badge">Lời Chúc Bình An</span>
+            </div>
+
+            <h2 class="modal-title" id="modal-title">Gửi Người Phụ Nữ Dịu Dàng</h2>
+
+            <div class="modal-body">
+                <p class="modal-quote" id="modal-quote">
+                    "..."
+                </p>
+            </div>
+
+            <div class="modal-actions">
+                <button class="action-btn copy-btn" id="modal-copy-btn">
+                    <span class="btn-icon">📋</span> Sao chép lời chúc
+                </button>
+                <button class="action-btn share-btn" id="modal-share-btn">
+                    <span class="btn-icon">💌</span> Gửi lời này cho bạn bè
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL TỰ TẠO THIỆP & XUẤT ẢNH PNG (CARD CREATOR) -->
+    <div id="creator-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-sheet creator-sheet">
+            <button class="modal-close" id="creator-close-btn" aria-label="Đóng">&times;</button>
+
+            <h2 class="creator-title">Thiết Kế Thiệp 20/10 Riêng Bạn</h2>
+            <p class="creator-desc">Tạo một tấm thiệp ấm áp mang tên người bạn thương yêu</p>
+
+            <div class="creator-form">
+                <div class="form-row">
+                    <label for="input-recipient">Thân gửi (Tên người nhận):</label>
+                    <input type="text" id="input-recipient" placeholder="Ví dụ: Mẹ yêu, Chị Linh, Bé An, Người thương..." maxlength="40">
+                </div>
+
+                <div class="form-row">
+                    <label for="select-theme">Chọn biểu tượng:</label>
+                    <div class="flower-picker">
+                        <label><input type="radio" name="flower-theme" value="🌸" checked> <span>🌸 Hoa hồng</span></label>
+                        <label><input type="radio" name="flower-theme" value="🌷"> <span>🌷 Tulip</span></label>
+                        <label><input type="radio" name="flower-theme" value="🌼"> <span>🌼 Cúc họa mi</span></label>
+                        <label><input type="radio" name="flower-theme" value="🌻"> <span>🌻 Hướng dương</span></label>
+                        <label><input type="radio" name="flower-theme" value="🪷"> <span>🪷 Hoa sen</span></label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="input-wish">Lời nhắn nhủ:</label>
+                    <textarea id="input-wish" rows="4" placeholder="Nhập lời chúc từ tận đáy lòng hoặc chọn gợi ý bên dưới..."></textarea>
+                    <div class="quick-wishes">
+                        <button type="button" class="quick-chip" data-text="Chúc mẹ một ngày 20/10 an vui, sức khỏe dồi dào và luôn giữ nụ cười hiền hậu trên môi.">Mẹ an vui</button>
+                        <button type="button" class="quick-chip" data-text="Mong em mỗi ngày đều thảnh thơi, công việc hanh thông và luôn xinh tươi, rạng ngời.">Em tươi tắn</button>
+                        <button type="button" class="quick-chip" data-text="Cảm ơn em vì đã cùng anh sẻ chia mọi điều. Chúc em ngày 20/10 ngập tràn hạnh phúc.">Ngọt ngào</button>
+                        <button type="button" class="quick-chip" data-text="Chúc bạn một ngày 20/10 thật nhiều hoa và quà, không lo deadline, vui vẻ trọn vẹn!">Đồng nghiệp</button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="input-sender">Ký tên người gửi:</label>
+                    <input type="text" id="input-sender" placeholder="Ví dụ: Con gái của mẹ, Đồng nghiệp bàn bên, Người luôn dõi theo..." maxlength="40">
+                </div>
+
+                <!-- Preview tấm thiệp để người dùng xem trước -->
+                <div class="preview-container">
+                    <p class="preview-label">Xem trước bưu thiếp:</p>
+                    <div class="postcard-preview" id="postcard-preview">
+                        <div class="preview-flower" id="prev-flower">🌸</div>
+                        <div class="preview-to" id="prev-to">Thân gửi Người Phụ Nữ Tuyệt Vời,</div>
+                        <div class="preview-msg" id="prev-msg">Chúc bạn ngày 20/10 ngập tràn niềm vui, an yên và vạn sự như ý.</div>
+                        <div class="preview-from" id="prev-from">— Gửi trọn yêu thương —</div>
+                        <div class="preview-watermark">20.10 • Vietnam Women's Day</div>
+                    </div>
+                </div>
+
+                <!-- Các nút hành động -->
+                <div class="creator-actions">
+                    <button class="action-btn download-btn" id="btn-download-card">
+                        <span class="btn-icon">🖼️</span> Tải ảnh thiệp (PNG)
+                    </button>
+                    <button class="action-btn copy-link-btn" id="btn-copy-share-link">
+                        <span class="btn-icon">🔗</span> Sao chép liên kết tặng người ấy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast thông báo nhỏ xinh -->
+    <div id="toast" class="toast-message" role="status" aria-live="polite">
+        Đã sao chép vào bộ nhớ tạm! ✨
+    </div>
+
+    <!-- Hidden Canvas để kết xuất ảnh thiệp chất lượng cao -->
+    <canvas id="export-canvas" width="800" height="1000" style="display:none;"></canvas>
+
+    <!-- Logic Script -->
+    <script src="script.js"></script>
+</body>
+</html>
