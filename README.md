@@ -4,7 +4,7 @@ Một trang web tĩnh nhẹ nhàng, thanh lịch và ấm áp dành tặng nhữ
 
 ---
 
-## ✨ Điểm nổi bật & Tính năng mới
+## ✨ Điểm nổi bật & Tính năng chính
 
 ### 1. 🌸 Vườn Lời Chúc (Tab 1)
 - **Tông màu mộc mạc, dịu dàng (Warm Vintage & Soft Floral):**
@@ -18,24 +18,23 @@ Một trang web tĩnh nhẹ nhàng, thanh lịch và ấm áp dành tặng nhữ
 - **Cá nhân hóa liên kết (URL params):**
   - Gửi kèm link: `?to=Mẹ+Yêu&from=Con+Gái` để trang web tự động hiện đích danh tên người nhận.
 
-### 2. 🎵 Giai Điệu & Lời Ca Đồng Bộ (Tab 2 - Thiết kế theo bản phác thảo)
-- **Bố cục 2 cột trực quan chuẩn phác thảo:**
-  - **Cột Trái (Player Box & Điều khiển):**
-    - Đĩa CD/Vinyl xoay tròn bên trái với rãnh đĩa và nhãn hoa ở tâm.
-    - Khung viền chữ nhật bao quanh **Tên bài hát** và **Nghệ sĩ**.
-    - Thanh tua thời gian (Seekbar) tương tác mượt mà.
-    - 3 nút điều khiển lớn: `⮜` (Bài trước), `▶ / ❚❚` (Phát/Dừng), `⮞` (Bài kế tiếp).
-    - Danh sách chọn nhanh 5 bài hát 20/10.
-  - **Cột Phải (Khung Lời bài hát ZingMP3):**
-    - Tiêu đề **Tên bài** ở giữa trên cùng.
-    - Lời bài hát chạy đồng bộ từng giây theo thời gian thực (Real-time Synced Lyrics).
-    - **Hiệu ứng ZingMP3:** Dòng đang hát được phóng to, in đậm, phát sáng theo màu chủ đề của bài hát; các dòng trước/sau làm mờ tinh tế; tự động cuộn mượt (auto-scroll) giữ câu hát ở giữa màn hình.
-    - **Click-to-seek:** Chạm vào bất kỳ câu hát nào để nghe ngay từ đoạn đó.
-- **Nền mờ nghệ thuật đồng bộ với ảnh và chủ đề bài hát:**
-  - Toàn bộ khung nghe nhạc có lớp nền ambient glow đổi màu theo từng bài hát (Ước Mơ Của Mẹ, Mẹ Yêu, Là Con Gái Thật Tuyệt, Nàng Thơ, Bao Tiền Một Mớ Bình Yên).
-- **Phát nhạc đa năng (Hybrid Audio Engine):**
-  - Sẵn sàng phát các tệp nhạc `.mp3` đặt trong thư mục `assets/music/`.
-  - Nếu chưa có tệp MP3 (hoặc mở offline), hệ thống **tự động chuyển sang bộ giai điệu Acoustic/Piano Web Audio êm dịu** tích hợp sẵn, giúp trang web **luôn luôn phát nhạc và đồng bộ lời 100% không lo lỗi thiếu file**.
+### 2. 🎵 Giai Điệu & Lời Ca Đồng Bộ (Tab 2 - 3 Ca Khúc Chính Thức)
+Bố cục 2 cột trực quan chuẩn theo bản vẽ phác thảo:
+- **Cột Trái (Player Box & Điều khiển):**
+  - Đĩa CD/Vinyl xoay tròn bên trái với rãnh đĩa và nhãn hoa ở tâm.
+  - Khung viền chữ nhật bao quanh **Tên bài hát** và **Nghệ sĩ**.
+  - Thanh tua thời gian (Seekbar) tương tác mượt mà.
+  - 3 nút điều khiển lớn: `⮜` (Bài trước), `▶ / ❚❚` (Phát/Dừng), `⮞` (Bài kế tiếp).
+  - Danh sách chọn nhanh 3 bài hát chính thức.
+- **Cột Phải (Khung Lời bài hát ZingMP3):**
+  - Tiêu đề **Tên bài** ở giữa trên cùng.
+  - Lời bài hát chuẩn bản gốc, chạy đồng bộ từng giây theo thời gian thực (Real-time Synced Lyrics).
+  - **Hiệu ứng ZingMP3:** Dòng đang hát được phóng to, in đậm, phát sáng theo màu chủ đề của bài hát; các dòng trước/sau làm mờ tinh tế; tự động cuộn mượt (auto-scroll) giữ câu hát ở giữa màn hình.
+  - **Chạm để tua (Click-to-seek):** Chạm vào bất kỳ câu hát nào để nghe ngay từ đoạn đó.
+- **3 Ca khúc chính thức đã tích hợp sẵn audio:**
+  1. 🪷 **Nhật Ký Của Mẹ** - Hiền Thục (Sáng tác: Nguyễn Văn Chung) [08:28]
+  2. 🌼 **Là Con Gái Thật Tuyệt** - Khởi My (Sáng tác: Lê Cát Trọng Lý) [03:37]
+  3. 🌹 **Bí Mật Của Hạnh Phúc** - Đông Nhi & Ngô Kiến Huy (Sáng tác: Nguyễn Hồng Thuận) [03:09]
 
 ---
 
@@ -44,9 +43,9 @@ Một trang web tĩnh nhẹ nhàng, thanh lịch và ấm áp dành tặng nhữ
 ```text
 ├── index.html        # Giao diện chính, điều hướng 2 Tab & khung phát nhạc
 ├── style.css         # Phong cách màu sắc, hiệu ứng đĩa xoay, ZingMP3 lyric
-├── script.js         # Xử lý tương tác, 5 bài hát, karaoke sync & xuất ảnh thiệp
+├── script.js         # Xử lý tương tác, 3 bài hát & karaoke sync chuẩn xác
 ├── assets/
-│   └── music/        # Thư mục đặt các bài hát .mp3 (song1.mp3 -> song5.mp3)
+│   └── music/        # 3 bài hát chính thức: song1.mp3, song2.mp3, song3.mp3
 │       └── README.txt
 └── README.md         # Hướng dẫn triển khai & sử dụng
 ```
@@ -58,7 +57,7 @@ Một trang web tĩnh nhẹ nhàng, thanh lịch và ấm áp dành tặng nhữ
 ### Bước 1: Khởi tạo Git & Đẩy lên GitHub
 ```bash
 git add .
-git commit -m "Them tab giai dieu 20/10 dong bo loi ZingMP3"
+git commit -m "Cap nhat 3 bai hat chinh thuc kem lyric va audio dong bo"
 git branch -M main
 git remote add origin https://github.com/<tai-khoan-cua-ban>/<ten-repo>.git
 git push -u origin main
