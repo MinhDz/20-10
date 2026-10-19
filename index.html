@@ -6,9 +6,9 @@
     <title>Gửi Bạn Ngày 20/10 Dịu Dàng 🌸</title>
     
     <!-- Meta SEO & Open Graph for Social Sharing (Facebook, Zalo, Telegram) -->
-    <meta name="description" content="Một góc nhỏ ấm áp và những lời chúc bình dị gửi đến những người phụ nữ tuyệt vời nhân ngày 20/10.">
+    <meta name="description" content="Một góc nhỏ ấm áp, những lời chúc bình dị và giai điệu dịu êm gửi đến những người phụ nữ tuyệt vời nhân ngày 20/10.">
     <meta property="og:title" content="20/10 Thật Bình Yên Và Rạng Rỡ Nhé 🌸">
-    <meta property="og:description" content="Chạm nhẹ để mở phong thư và nhận một nhành hoa cùng lời chúc ấm áp dành riêng cho bạn.">
+    <meta property="og:description" content="Chạm nhẹ để mở phong thư, ngắm cánh hoa bay, lắng nghe bài ca và nhận lời chúc ấm áp.">
     <meta property="og:type" content="website">
     
     <!-- Favicon -->
@@ -27,11 +27,11 @@
     <!-- Canvas hiệu ứng cánh hoa bay lãng đãng -->
     <canvas id="petal-canvas"></canvas>
 
-    <!-- Các nút điều khiển góc trên (Bật/Tắt nhạc, Thả thêm hoa, Toàn màn hình) -->
+    <!-- Các nút điều khiển góc trên (Bật/Tắt nhạc, Thả thêm hoa) -->
     <div class="top-nav">
-        <button id="btn-music" class="nav-btn" title="Bật / Tắt âm nhạc" aria-label="Bật/Tắt âm nhạc">
+        <button id="btn-music" class="nav-btn" title="Chuyển tới trình phát nhạc 20/10" aria-label="Bật/Tắt âm nhạc">
             <span class="icon-music">♫</span>
-            <span class="btn-label">Âm nhạc</span>
+            <span class="btn-label" id="top-music-label">Âm nhạc</span>
         </button>
         <button id="btn-bloom" class="nav-btn" title="Gieo thêm cánh hoa" aria-label="Gieo hoa">
             <span class="icon-flower">🌸</span>
@@ -76,63 +76,196 @@
             <div class="badge-pill">Ngày Phụ Nữ Việt Nam 20/10</div>
             <h1 class="main-headline" id="main-greeting-title">Chúc Bạn Luôn An Yên & Rạng Rỡ</h1>
             <p class="main-subtext" id="main-personalized-note">
-                Dù bạn là ai, đang ở đâu, mong bạn hôm nay được thảnh thơi mỉm cười, thưởng thức tách trà ấm và cảm nhận trọn vẹn sự yêu thương.
+                Dù bạn là ai, đang ở đâu, mong bạn hôm nay được thảnh thơi mỉm cười, lắng nghe giai điệu ngọt ngào và cảm nhận trọn vẹn sự yêu thương.
             </p>
         </header>
 
-        <!-- Thanh chọn nhóm đối tượng (Tabs) -->
-        <section class="category-section">
-            <div class="category-scroll">
-                <button class="cat-pill active" data-category="all">
-                    <span>✨</span> Tất cả
-                </button>
-                <button class="cat-pill" data-category="mom">
-                    <span>🌸</span> Cho Mẹ
-                </button>
-                <button class="cat-pill" data-category="lover">
-                    <span>🌹</span> Cho "Người ấy"
-                </button>
-                <button class="cat-pill" data-category="friends">
-                    <span>🌷</span> Chị Em & Bạn bè
-                </button>
-                <button class="cat-pill" data-category="colleague">
-                    <span>🌼</span> Đồng nghiệp
-                </button>
-                <button class="cat-pill" data-category="self">
-                    <span>🌻</span> Cho chính mình
-                </button>
-            </div>
-        </section>
+        <!-- THANH CHUYỂN TAB CHÍNH (VƯỜN LỜI CHÚC | GIAI ĐIỆU & LỜI CA) -->
+        <nav class="main-tabs-nav" aria-label="Chọn phần trải nghiệm">
+            <button class="main-nav-tab active" id="tab-btn-wishes" data-target="pane-wishes">
+                <span class="tab-icon">🌸</span>
+                <span class="tab-title">Vườn Lời Chúc</span>
+            </button>
+            <button class="main-nav-tab" id="tab-btn-music" data-target="pane-music">
+                <span class="tab-icon">🎵</span>
+                <span class="tab-title">Giai Điệu & Lời Ca</span>
+                <span class="tab-badge">Đồng bộ Lyric</span>
+            </button>
+        </nav>
 
-        <!-- Danh sách thẻ lời chúc dạng bưu thiếp nhẹ nhàng -->
-        <section class="cards-grid" id="cards-container">
-            <!-- Render động bằng Javascript -->
-        </section>
-
-        <!-- Hộp tương tác: Rút quẻ may mắn & Tạo thiệp riêng -->
-        <section class="action-dock">
-            <div class="dock-card">
-                <div class="dock-icon">🔮</div>
-                <div class="dock-info">
-                    <h3>Thông điệp ngẫu nhiên hôm nay</h3>
-                    <p>Bốc một quẻ nhỏ mang niềm vui bất ngờ cho ngày 20/10</p>
+        <!-- ===================================================================
+             TAB 1: VƯỜN LỜI CHÚC
+             =================================================================== -->
+        <div id="pane-wishes" class="tab-pane active">
+            <!-- Thanh chọn nhóm đối tượng (Categories) -->
+            <section class="category-section">
+                <div class="category-scroll">
+                    <button class="cat-pill active" data-category="all">
+                        <span>✨</span> Tất cả
+                    </button>
+                    <button class="cat-pill" data-category="mom">
+                        <span>🌸</span> Cho Mẹ
+                    </button>
+                    <button class="cat-pill" data-category="lover">
+                        <span>🌹</span> Cho "Người ấy"
+                    </button>
+                    <button class="cat-pill" data-category="friends">
+                        <span>🌷</span> Chị Em & Bạn bè
+                    </button>
+                    <button class="cat-pill" data-category="colleague">
+                        <span>🌼</span> Đồng nghiệp
+                    </button>
+                    <button class="cat-pill" data-category="self">
+                        <span>🌻</span> Cho chính mình
+                    </button>
                 </div>
-                <button class="dock-btn" id="btn-random-wish">
-                    Rút quẻ 🎁
-                </button>
-            </div>
+            </section>
 
-            <div class="dock-card">
-                <div class="dock-icon">✍️</div>
-                <div class="dock-info">
-                    <h3>Tự tạo thiệp & Tải ảnh</h3>
-                    <p>Gõ tên người nhận, tạo link riêng hoặc lưu ảnh gửi Zalo/Facebook</p>
+            <!-- Danh sách thẻ lời chúc dạng bưu thiếp nhẹ nhàng -->
+            <section class="cards-grid" id="cards-container">
+                <!-- Render động bằng Javascript -->
+            </section>
+
+            <!-- Hộp tương tác: Rút quẻ may mắn & Tạo thiệp riêng -->
+            <section class="action-dock">
+                <div class="dock-card">
+                    <div class="dock-icon">🔮</div>
+                    <div class="dock-info">
+                        <h3>Thông điệp ngẫu nhiên hôm nay</h3>
+                        <p>Bốc một quẻ nhỏ mang niềm vui bất ngờ cho ngày 20/10</p>
+                    </div>
+                    <button class="dock-btn" id="btn-random-wish">
+                        Rút quẻ 🎁
+                    </button>
                 </div>
-                <button class="dock-btn secondary" id="btn-open-creator">
-                    Tạo thiệp ngay 💌
-                </button>
-            </div>
-        </section>
+
+                <div class="dock-card">
+                    <div class="dock-icon">✍️</div>
+                    <div class="dock-info">
+                        <h3>Tự tạo thiệp & Tải ảnh</h3>
+                        <p>Gõ tên người nhận, tạo link riêng hoặc lưu ảnh gửi Zalo/Facebook</p>
+                    </div>
+                    <button class="dock-btn secondary" id="btn-open-creator">
+                        Tạo thiệp ngay 💌
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===================================================================
+             TAB 2: GIAI ĐIỆU & LỜI CA (Theo đúng thiết kế phác thảo người dùng gửi)
+             =================================================================== -->
+        <div id="pane-music" class="tab-pane" style="display: none;">
+            <section class="music-player-section" id="music-player-section">
+                
+                <!-- Lớp nền mờ nghệ thuật đồng bộ với ảnh và chủ đề bài hát -->
+                <div class="player-ambient-backdrop" id="player-ambient-backdrop"></div>
+
+                <div class="music-studio-container">
+                    
+                    <!-- CỘT TRÁI: Khung phát nhạc, đĩa xoay và các nút điều khiển (Theo đúng phác thảo) -->
+                    <div class="studio-left-card">
+                        
+                        <!-- Khung thẻ phát nhạc (Music Card) -->
+                        <div class="player-box" id="player-box">
+                            <!-- Đĩa xoay CD / Vinyl bên trái (Hình tròn) -->
+                            <div class="disc-outer">
+                                <div class="vinyl-disc" id="vinyl-disc">
+                                    <div class="disc-groove-ring ring-1"></div>
+                                    <div class="disc-groove-ring ring-2"></div>
+                                    <div class="disc-art-center" id="disc-art-center">
+                                        <span class="disc-symbol" id="disc-symbol">🪷</span>
+                                    </div>
+                                    <div class="disc-spindle"></div>
+                                </div>
+                            </div>
+
+                            <!-- Khung chữ nhật bên phải: Tên bài hát & Nghệ sĩ -->
+                            <div class="song-info-meta">
+                                <div class="song-title-frame">
+                                    <h3 class="active-song-title" id="active-song-title">Ước Mơ Của Mẹ</h3>
+                                </div>
+                                <p class="active-artist" id="active-artist">Văn Mai Hương x Hứa Kim Tuyền</p>
+                                <div class="song-genre-tag" id="song-genre-tag">✦ Tri ân Mẹ kính yêu</div>
+                            </div>
+                        </div>
+
+                        <!-- Thanh tua thời gian (Seekbar) -->
+                        <div class="player-timeline">
+                            <span class="time-label" id="current-time-txt">00:00</span>
+                            <div class="time-track" id="time-track" role="slider" aria-label="Tua nhạc" tabindex="0">
+                                <div class="time-fill" id="time-fill"></div>
+                                <div class="time-thumb" id="time-thumb"></div>
+                            </div>
+                            <span class="time-label" id="total-time-txt">03:30</span>
+                        </div>
+
+                        <!-- 3 Nút điều khiển lớn (< [ ] > theo hình vẽ) -->
+                        <div class="main-controls-row">
+                            <!-- Nút Bài trước (<) -->
+                            <button class="studio-btn btn-prev" id="btn-song-prev" title="Bài trước" aria-label="Bài trước">
+                                <span class="nav-arrow">⮜</span>
+                            </button>
+
+                            <!-- Nút Phát / Tạm dừng ([ ] ở giữa) -->
+                            <button class="studio-btn btn-play-toggle" id="btn-song-play-toggle" title="Phát hoặc Dừng nhạc" aria-label="Phát nhạc">
+                                <span class="play-state-icon" id="play-state-icon">▶</span>
+                            </button>
+
+                            <!-- Nút Bài kế tiếp (>) -->
+                            <button class="studio-btn btn-next" id="btn-song-next" title="Bài tiếp theo" aria-label="Bài tiếp theo">
+                                <span class="nav-arrow">⮞</span>
+                            </button>
+                        </div>
+
+                        <!-- Danh sách chọn bài nhanh (5 bài hát tuyển chọn) -->
+                        <div class="playlist-selector-box">
+                            <div class="playlist-title-row">
+                                <span class="pl-heading">5 Giai Điệu 20/10 Ý Nghĩa</span>
+                                <span class="pl-count" id="pl-count">Bài 1 / 5</span>
+                            </div>
+                            <div class="playlist-chips" id="playlist-chips">
+                                <!-- Render danh sách bài bằng JavaScript -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- CỘT PHẢI: Khung hiển thị lời bài hát (ZingMP3-style Synchronized Lyrics) -->
+                    <div class="studio-right-lyrics" id="studio-lyrics-box">
+                        
+                        <!-- Tiêu đề "Tên bài" ở giữa trên cùng (theo hình vẽ) -->
+                        <div class="lyrics-header-bar">
+                            <div class="lyrics-tag-indicator">
+                                <span class="pulse-dot"></span>
+                                <span id="lyrics-indicator-text">Lời bài hát đồng bộ</span>
+                            </div>
+                            <h2 class="lyrics-display-title" id="lyrics-display-title">Ước Mơ Của Mẹ</h2>
+                            <p class="lyrics-display-artist" id="lyrics-display-artist">Văn Mai Hương x Hứa Kim Tuyền</p>
+                        </div>
+
+                        <!-- Vùng cuộn lời bài hát mượt mà (ZingMP3 Karaoke Highlight) -->
+                        <div class="lyrics-scroll-area" id="lyrics-scroll-area">
+                            <div class="lyrics-stream" id="lyrics-stream">
+                                <!-- Các dòng lyric sẽ được render và đồng bộ thời gian tại đây -->
+                            </div>
+                        </div>
+
+                        <!-- Thanh chân trang khung lời bài hát -->
+                        <div class="lyrics-bottom-bar">
+                            <div class="lyrics-hint">
+                                <span>💡 Chạm vào câu hát bất kỳ để chuyển đến đoạn đó</span>
+                            </div>
+                            <button class="btn-theme-sound" id="btn-theme-sound" title="Đổi hiệu ứng âm hưởng">
+                                <span id="sound-mode-icon">🍃</span> <span id="sound-mode-label">Âm vang mộc</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
 
         <!-- Footer ấm áp -->
         <footer class="page-footer">
@@ -245,8 +378,10 @@
     <!-- Hidden Canvas để kết xuất ảnh thiệp chất lượng cao -->
     <canvas id="export-canvas" width="800" height="1000" style="display:none;"></canvas>
 
+    <!-- Thẻ Audio HTML5 chuẩn -->
+    <audio id="main-audio-player" preload="auto"></audio>
+
     <!-- Logic Script -->
     <script src="script.js"></script>
 </body>
 </html>
-

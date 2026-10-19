@@ -1,7 +1,8 @@
 /**
  * ===================================================================
  * NGÀY PHỤ NỮ VIỆT NAM 20/10 - DỊU DÀNG & ẤM ÁP
- * Logic tương tác, Hộp nhạc Web Audio, Cánh hoa rơi & Xuất ảnh thiệp
+ * Vườn Lời Chúc, Cánh Hoa Rơi, Bưu Thiếp Cá Nhân Hóa &
+ * Trình Phát Nhạc 2 Cột Đồng Bộ Lời Bài Hát (ZingMP3 Style)
  * ===================================================================
  */
 
@@ -134,11 +135,143 @@
     ];
 
     // -------------------------------------------------------------------
-    // 2. AUDIO SYNTHESIZER (Tạo âm thanh mộc mạc, không lo mất file mp3)
+    // 2. DỮ LIỆU 5 BÀI HÁT & LỜI ĐỒNG BỘ (20/10 PLAYLIST & SYNCED LYRICS)
+    // -------------------------------------------------------------------
+    const PLAYLIST_DATA = [
+        {
+            id: 0,
+            title: 'Ước Mơ Của Mẹ',
+            artist: 'Văn Mai Hương x Hứa Kim Tuyền',
+            genreTag: '✦ Tri ân Mẹ kính yêu',
+            flower: '🪷',
+            color: '#C87A80',
+            subColor: '#FAF2E8',
+            lightBg: '#F7E9EA',
+            audioSrc: 'assets/music/song1.mp3',
+            duration: 210,
+            melody: [523.25, 659.25, 783.99, 1046.50, 783.99, 659.25, 587.33, 698.46, 880.00],
+            lyrics: [
+                { time: 0, text: "♫ Giai điệu nhẹ nhàng và sâu lắng mở đầu bài hát..." },
+                { time: 8, text: "Lời ru ngày xưa mẹ hát con nghe từng đêm hè" },
+                { time: 16, text: "Con vô tư hỏi: 'Ước mơ của mẹ là gì hỡi mẹ ơi?'" },
+                { time: 24, text: "Mẹ chỉ cười, xoa đầu con và dịu dàng nói rằng:" },
+                { time: 32, text: "'Ước mơ của mẹ là thấy con lớn khôn từng ngày.'" },
+                { time: 42, text: "Mẹ cũng có những ước mơ của riêng mình thời son trẻ" },
+                { time: 52, text: "Nhưng vì con, mẹ gác lại tất cả hoài bão phía sau lưng" },
+                { time: 62, text: "Con lớn lên mang theo cả thanh xuân và nụ cười của mẹ" },
+                { time: 72, text: "Tóc mẹ thêm sợi bạc, bàn tay thêm những vết chai sần" },
+                { time: 82, text: "Giờ đây con chỉ ước mẹ mãi an yên và khỏe mạnh" },
+                { time: 94, text: "Nụ cười mẹ hiền luôn là bến đỗ bình yên nhất trần gian" },
+                { time: 106, text: "Cảm ơn mẹ vì tất cả những hy sinh thầm lặng chở che" },
+                { time: 120, text: "Chúc mẹ ngày 20/10 ngập tràn niềm vui và bình an 🪷" }
+            ]
+        },
+        {
+            id: 1,
+            title: 'Mẹ Yêu',
+            artist: 'Phương Uyên',
+            genreTag: '✦ Tình mẫu tử thiêng liêng',
+            flower: '🌸',
+            color: '#BD4A4F',
+            subColor: '#FDF3F4',
+            lightBg: '#FAEAEB',
+            audioSrc: 'assets/music/song2.mp3',
+            duration: 190,
+            melody: [440.00, 523.25, 659.25, 880.00, 659.25, 523.25, 587.33, 698.46],
+            lyrics: [
+                { time: 0, text: "♫ Tiếng dương cầm êm dịu ngân vang..." },
+                { time: 7, text: "Sinh con ra trong bao nhiêu khó nhọc, nhọc nhằn của mẹ" },
+                { time: 15, text: "Mẹ ru con yêu qua bao tháng ngày gió mưa" },
+                { time: 23, text: "Dù gian nan mẹ vẫn luôn mỉm cười hiền dịu" },
+                { time: 31, text: "Vì con là cả thế giới bao la của mẹ" },
+                { time: 40, text: "Ánh mắt mẹ hiền ấm áp như vầng dương soi tỏ" },
+                { time: 50, text: "Dìu dắt bước chân con qua những nẻo gập ghềnh" },
+                { time: 60, text: "Mẹ ơi con yêu mẹ nhiều lắm, ngàn lời khó nói hết" },
+                { time: 72, text: "Nguyện cầu mẹ luôn bình an, mạnh khỏe mãi bên con" },
+                { time: 85, text: "Dẫu đi cùng trời cuối đất, không đâu ấm bằng lòng mẹ 🌸" }
+            ]
+        },
+        {
+            id: 2,
+            title: 'Là Con Gái Thật Tuyệt',
+            artist: 'Lê Cát Trọng Lý',
+            genreTag: '✦ Tươi vui & Rạng rỡ',
+            flower: '🌼',
+            color: '#5E8B7E',
+            subColor: '#F0F7F4',
+            lightBg: '#EBF0EA',
+            audioSrc: 'assets/music/song3.mp3',
+            duration: 180,
+            melody: [587.33, 698.46, 880.00, 1046.50, 880.00, 698.46, 783.99, 659.25],
+            lyrics: [
+                { time: 0, text: "♫ Giai điệu trong trẻo, rộn ràng đón nắng mai..." },
+                { time: 8, text: "Ngày tạo hóa ban cho em đôi mắt biết cười và nụ cười xinh" },
+                { time: 16, text: "Mái tóc mây bồng bềnh tung bay trong gió sớm" },
+                { time: 25, text: "Là con gái thật tuyệt, nhẹ nhàng, tự tin và kiêu hãnh" },
+                { time: 34, text: "Tự do bước đi trên con đường của riêng mình chọn" },
+                { time: 44, text: "Biết yêu thương bản thân, mỉm cười với mọi điều bình dị" },
+                { time: 54, text: "Tỏa sáng theo cách tự nhiên và duyên dáng nhất của em" },
+                { time: 64, text: "Dẫu mưa hay nắng vẫn giữ nguyên nét thuần khiết trong ngần" },
+                { time: 76, text: "Bởi vì em là đóa hoa rực rỡ nhất giữa cuộc đời này 🌼" }
+            ]
+        },
+        {
+            id: 3,
+            title: 'Nàng Thơ',
+            artist: 'Hoàng Dũng',
+            genreTag: '✦ Ngọt ngào tặng người thương',
+            flower: '🌷',
+            color: '#8A6B8F',
+            subColor: '#F8F3FA',
+            lightBg: '#F3EDF7',
+            audioSrc: 'assets/music/song4.mp3',
+            duration: 215,
+            melody: [523.25, 659.25, 783.99, 987.77, 783.99, 659.25, 587.33, 698.46],
+            lyrics: [
+                { time: 0, text: "♫ Tiếng guitar mộc mạc và da diết..." },
+                { time: 8, text: "Em, ngày em đánh rơi nụ cười vào mắt anh" },
+                { time: 17, text: "Có nghe mùa thu dịu dàng rụng rơi những chiếc lá vàng?" },
+                { time: 26, text: "Em từng là nàng thơ của những giấc mơ thanh xuân" },
+                { time: 35, text: "Dịu dàng như cơn gió đầu mùa ghé qua hiên nhà" },
+                { time: 45, text: "Cảm ơn em vì đã mang đến những ấm áp ngọt lành" },
+                { time: 56, text: "Cho trái tim này biết rung động và biết chở che" },
+                { time: 68, text: "Chúc nàng thơ của anh ngày 20/10 ngập tràn hạnh phúc" },
+                { time: 80, text: "Mãi mãi là nụ cười đẹp nhất trong ánh mắt anh 🌷" }
+            ]
+        },
+        {
+            id: 4,
+            title: 'Bao Tiền Một Mớ Bình Yên',
+            artist: '14 Casper & Bon',
+            genreTag: '✦ Bình yên & Chữa lành',
+            flower: '🌻',
+            color: '#D48C46',
+            subColor: '#FDF5EC',
+            lightBg: '#FAF2E8',
+            audioSrc: 'assets/music/song5.mp3',
+            duration: 195,
+            melody: [392.00, 440.00, 523.25, 659.25, 523.25, 440.00, 493.88, 587.33],
+            lyrics: [
+                { time: 0, text: "♫ Tiếng suối reo và phím đàn lofi êm ả..." },
+                { time: 7, text: "Bao tiền một mớ bình yên giữa phố thị tấp nập?" },
+                { time: 15, text: "Để mua cho những ngày lòng chênh vênh gió giông" },
+                { time: 24, text: "Mong em hôm nay tạm gác lại mọi âu lo, bộn bề" },
+                { time: 33, text: "Pha một ấm trà thơm, ngắm hoàng hôn nhẹ buông" },
+                { time: 43, text: "Thế giới này dẫu có vội vã và nhiều áp lực đến đâu" },
+                { time: 54, text: "Xin em hãy luôn dành cho mình khoảng lặng an yên" },
+                { time: 65, text: "Bình yên chẳng ở đâu xa xôi ngoài tầm với" },
+                { time: 76, text: "Bình yên là khi em biết yêu thương và trân trọng chính mình 🌻" }
+            ]
+        }
+    ];
+
+    // -------------------------------------------------------------------
+    // 3. AUDIO SYNTHESIZER & WEB AUDIO ENGINE (Hoạt động offline 100%)
     // -------------------------------------------------------------------
     let audioCtx = null;
-    let isMusicPlaying = false;
-    let musicInterval = null;
+    let isSynthPlaying = false;
+    let synthInterval = null;
+    let synthStep = 0;
 
     function getAudioContext() {
         if (!audioCtx) {
@@ -151,14 +284,13 @@
         return audioCtx;
     }
 
-    // Tiếng chuông ngân thanh thoát khi chạm hoa / mở thiệp
+    // Tiếng chuông ngân thanh thoát khi tương tác
     function playChimeSound() {
         try {
             const ctx = getAudioContext();
             if (!ctx) return;
 
             const now = ctx.currentTime;
-            // Hợp âm ngũ cung dịu dàng F Major 7 (F4, A4, C5, E5, G5)
             const notes = [349.23, 440.0, 523.25, 659.25, 783.99];
 
             notes.forEach((freq, idx) => {
@@ -183,29 +315,20 @@
         }
     }
 
-    // Nhạc nền Hộp nhạc (Music Box Melodic Sequence)
-    const MUSIC_BOX_NOTES = [
-        // Nốt nhạc dịu dàng ru êm
-        523.25, 659.25, 783.99, 1046.50, 783.99, 659.25,
-        587.33, 698.46, 880.00, 698.46, 587.33,
-        523.25, 659.25, 783.99, 987.77, 783.99, 659.25,
-        440.00, 523.25, 659.25, 523.25, 440.00
-    ];
-    let noteStep = 0;
-
-    function playMusicBoxNote() {
-        if (!isMusicPlaying) return;
+    // Phát nốt nhạc mô phỏng cho bài hát khi offline hoặc chưa có file mp3
+    function playSynthMelodyNote(song) {
+        if (!isPlayerPlaying) return;
         const ctx = getAudioContext();
         if (!ctx) return;
 
-        const freq = MUSIC_BOX_NOTES[noteStep % MUSIC_BOX_NOTES.length];
-        noteStep++;
+        const melody = song.melody || [523.25, 659.25, 783.99];
+        const freq = melody[synthStep % melody.length];
+        synthStep++;
 
         const now = ctx.currentTime;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
 
-        // Âm sắc music box trong veo
         osc.type = 'sine';
         osc.frequency.setValueAtTime(freq, now);
 
@@ -220,28 +343,476 @@
         osc.stop(now + 1.7);
     }
 
-    function toggleBackgroundMusic() {
-        const btn = document.getElementById('btn-music');
-        if (!isMusicPlaying) {
-            getAudioContext();
-            isMusicPlaying = true;
-            if (btn) btn.classList.add('active');
-            musicInterval = setInterval(playMusicBoxNote, 600);
-            playMusicBoxNote();
-            showToast('Đang phát giai điệu hộp nhạc êm đềm ♫');
-        } else {
-            isMusicPlaying = false;
-            if (btn) btn.classList.remove('active');
-            if (musicInterval) {
-                clearInterval(musicInterval);
-                musicInterval = null;
+    // -------------------------------------------------------------------
+    // 4. TRÌNH PHÁT NHẠC STUDIO & ĐỒNG BỘ LYRIC (ZINGMP3 STYLE ENGINE)
+    // -------------------------------------------------------------------
+    let currentSongIndex = 0;
+    let isPlayerPlaying = false;
+    let currentPlaybackTime = 0;
+    let fallbackTimer = null;
+    let activeLyricIndex = -1;
+    let audioElement = null;
+    let isUsingFallbackSynth = false;
+
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    function initMusicStudio() {
+        audioElement = document.getElementById('main-audio-player');
+        
+        // Render danh sách chọn bài (Mini Playlist)
+        renderPlaylistChips();
+
+        // Tải bài hát đầu tiên
+        loadSong(currentSongIndex, false);
+
+        // Lắng nghe sự kiện audio element
+        if (audioElement) {
+            audioElement.addEventListener('timeupdate', () => {
+                if (!isUsingFallbackSynth) {
+                    currentPlaybackTime = audioElement.currentTime;
+                    updateTimelineUI();
+                    syncLyrics(currentPlaybackTime);
+                }
+            });
+
+            audioElement.addEventListener('ended', () => {
+                nextSong();
+            });
+
+            audioElement.addEventListener('error', () => {
+                // Nếu không tìm thấy file MP3 cục bộ, tự động chuyển sang chế độ nhạc mô phỏng du dương
+                console.info('Sử dụng bộ phát giai điệu Web Audio êm dịu cho bài hát hiện tại.');
+                isUsingFallbackSynth = true;
+            });
+        }
+
+        // Bắt sự kiện 3 nút điều khiển lớn (< [ ] >)
+        const btnPrev = document.getElementById('btn-song-prev');
+        const btnNext = document.getElementById('btn-song-next');
+        const btnPlayToggle = document.getElementById('btn-song-play-toggle');
+
+        if (btnPrev) btnPrev.addEventListener('click', prevSong);
+        if (btnNext) btnNext.addEventListener('click', nextSong);
+        if (btnPlayToggle) btnPlayToggle.addEventListener('click', togglePlayPause);
+
+        // Bắt sự kiện thanh timeline (Seekbar)
+        const timeTrack = document.getElementById('time-track');
+        if (timeTrack) {
+            timeTrack.addEventListener('click', (e) => {
+                const rect = timeTrack.getBoundingClientRect();
+                const clickPos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                const song = PLAYLIST_DATA[currentSongIndex];
+                const totalDur = (audioElement && audioElement.duration && !isNaN(audioElement.duration)) 
+                    ? audioElement.duration 
+                    : song.duration;
+                seekTo(clickPos * totalDur);
+            });
+        }
+
+        // Phím tắt bàn phím tiện lợi (Space: Play/Pause, Mũi tên: Next/Prev)
+        window.addEventListener('keydown', (e) => {
+            // Không can thiệp nếu đang gõ chữ trong form
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            if (e.code === 'Space') {
+                e.preventDefault();
+                togglePlayPause();
+            } else if (e.code === 'ArrowRight') {
+                nextSong();
+            } else if (e.code === 'ArrowLeft') {
+                prevSong();
             }
-            showToast('Đã dừng âm nhạc');
+        });
+    }
+
+    // Tải thông tin và giao diện bài hát
+    function loadSong(index, shouldAutoPlay = false) {
+        currentSongIndex = (index + PLAYLIST_DATA.length) % PLAYLIST_DATA.length;
+        const song = PLAYLIST_DATA[currentSongIndex];
+
+        currentPlaybackTime = 0;
+        activeLyricIndex = -1;
+        isUsingFallbackSynth = false;
+
+        // Cập nhật Cột Trái (Player Box & Disc)
+        const disc = document.getElementById('vinyl-disc');
+        const discSymbol = document.getElementById('disc-symbol');
+        const songTitle = document.getElementById('active-song-title');
+        const songArtist = document.getElementById('active-artist');
+        const songGenreTag = document.getElementById('song-genre-tag');
+        const plCount = document.getElementById('pl-count');
+
+        if (discSymbol) discSymbol.textContent = song.flower;
+        if (songTitle) songTitle.textContent = song.title;
+        if (songArtist) songArtist.textContent = song.artist;
+        if (songGenreTag) songGenreTag.textContent = song.genreTag;
+        if (plCount) plCount.textContent = `Bài ${currentSongIndex + 1} / ${PLAYLIST_DATA.length}`;
+
+        // Cập nhật Cột Phải (Lyrics Header)
+        const lyricsTitle = document.getElementById('lyrics-display-title');
+        const lyricsArtist = document.getElementById('lyrics-display-artist');
+        if (lyricsTitle) lyricsTitle.textContent = song.title;
+        if (lyricsArtist) lyricsArtist.textContent = song.artist;
+
+        // Cập nhật màu sắc chủ đề và nền mờ nghệ thuật (ảnh thì lấy nền của ảnh)
+        const playerSection = document.getElementById('music-player-section');
+        if (playerSection) {
+            playerSection.style.setProperty('--song-color', song.color);
+            playerSection.style.setProperty('--song-sub-color', song.subColor);
+            playerSection.style.setProperty('--song-light-bg', song.lightBg);
+            playerSection.style.setProperty('--song-center-bg', song.lightBg);
+        }
+
+        // Cập nhật thời gian
+        document.getElementById('current-time-txt').textContent = '00:00';
+        document.getElementById('total-time-txt').textContent = formatTime(song.duration);
+        document.getElementById('time-fill').style.width = '0%';
+        document.getElementById('time-thumb').style.left = '0%';
+
+        // Render toàn bộ lời bài hát vào khung nhìn ZingMP3
+        renderLyrics(song.lyrics);
+
+        // Đánh dấu bài active trong playlist
+        updatePlaylistChipsActiveState();
+
+        // Thiết lập audio element
+        if (audioElement) {
+            audioElement.src = song.audioSrc;
+            audioElement.currentTime = 0;
+            audioElement.load();
+        }
+
+        if (shouldAutoPlay) {
+            playSong();
+        } else {
+            pauseSong();
+        }
+    }
+
+    // Render danh sách chọn bài (Mini Playlist)
+    function renderPlaylistChips() {
+        const container = document.getElementById('playlist-chips');
+        if (!container) return;
+
+        container.innerHTML = '';
+        PLAYLIST_DATA.forEach((song, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `pl-item-btn ${idx === currentSongIndex ? 'active' : ''}`;
+            btn.setAttribute('data-index', idx);
+            btn.innerHTML = `
+                <div class="pl-item-left">
+                    <span class="pl-item-icon">${song.flower}</span>
+                    <div>
+                        <div class="pl-item-title">${song.title}</div>
+                        <div class="pl-item-artist">${song.artist}</div>
+                    </div>
+                </div>
+                <span class="pl-playing-indicator">${idx === currentSongIndex ? '♫' : ''}</span>
+            `;
+
+            btn.addEventListener('click', () => {
+                loadSong(idx, true);
+                playChimeSound();
+            });
+
+            container.appendChild(btn);
+        });
+    }
+
+    function updatePlaylistChipsActiveState() {
+        const items = document.querySelectorAll('.pl-item-btn');
+        items.forEach((item, idx) => {
+            const indicator = item.querySelector('.pl-playing-indicator');
+            if (idx === currentSongIndex) {
+                item.classList.add('active');
+                if (indicator) indicator.textContent = isPlayerPlaying ? '▶' : '♫';
+            } else {
+                item.classList.remove('active');
+                if (indicator) indicator.textContent = '';
+            }
+        });
+    }
+
+    // Render các dòng lời bài hát (ZingMP3-Style)
+    function renderLyrics(lyrics) {
+        const stream = document.getElementById('lyrics-stream');
+        if (!stream) return;
+
+        stream.innerHTML = '';
+        lyrics.forEach((line, idx) => {
+            const div = document.createElement('div');
+            div.className = `lyric-line ${idx === 0 ? 'near-active' : ''}`;
+            div.setAttribute('data-index', idx);
+            div.setAttribute('data-time', line.time);
+            div.textContent = line.text;
+
+            // Click vào câu hát bất kỳ -> Nhảy ngay đến đoạn đó
+            div.addEventListener('click', () => {
+                seekTo(line.time);
+                if (!isPlayerPlaying) playSong();
+            });
+
+            stream.appendChild(div);
+        });
+
+        // Cuộn về đầu danh sách lời
+        const scrollArea = document.getElementById('lyrics-scroll-area');
+        if (scrollArea) scrollArea.scrollTop = 0;
+    }
+
+    // Đồng bộ lời bài hát chạy mượt theo thời gian thực (ZingMP3 Smooth Karaoke Effect)
+    function syncLyrics(time) {
+        const song = PLAYLIST_DATA[currentSongIndex];
+        const lyrics = song.lyrics;
+        if (!lyrics || lyrics.length === 0) return;
+
+        let currentIndex = -1;
+        for (let i = 0; i < lyrics.length; i++) {
+            if (time >= lyrics[i].time) {
+                currentIndex = i;
+            } else {
+                break;
+            }
+        }
+
+        if (currentIndex !== activeLyricIndex && currentIndex !== -1) {
+            activeLyricIndex = currentIndex;
+            const lines = document.querySelectorAll('.lyric-line');
+
+            lines.forEach((lineEl, idx) => {
+                lineEl.classList.remove('active', 'near-active');
+
+                if (idx === activeLyricIndex) {
+                    lineEl.classList.add('active');
+
+                    // Tự động cuộn mượt đưa dòng đang hát vào đúng vị trí trung tâm (ZingMP3 Auto-scroll)
+                    const scrollArea = document.getElementById('lyrics-scroll-area');
+                    if (scrollArea) {
+                        const targetY = lineEl.offsetTop - (scrollArea.clientHeight / 2) + (lineEl.clientHeight / 2);
+                        scrollArea.scrollTo({
+                            top: Math.max(0, targetY),
+                            behavior: 'smooth'
+                        });
+                    }
+                } else if (idx === activeLyricIndex - 1 || idx === activeLyricIndex + 1) {
+                    lineEl.classList.add('near-active');
+                }
+            });
+        }
+    }
+
+    function updateTimelineUI() {
+        const song = PLAYLIST_DATA[currentSongIndex];
+        const totalDur = (audioElement && audioElement.duration && !isNaN(audioElement.duration)) 
+            ? audioElement.duration 
+            : song.duration;
+
+        const percent = Math.min(100, Math.max(0, (currentPlaybackTime / totalDur) * 100));
+
+        const timeFill = document.getElementById('time-fill');
+        const timeThumb = document.getElementById('time-thumb');
+        const currTxt = document.getElementById('current-time-txt');
+        const totalTxt = document.getElementById('total-time-txt');
+
+        if (timeFill) timeFill.style.width = `${percent}%`;
+        if (timeThumb) timeThumb.style.left = `${percent}%`;
+        if (currTxt) currTxt.textContent = formatTime(currentPlaybackTime);
+        if (totalTxt) totalTxt.textContent = formatTime(totalDur);
+    }
+
+    function playSong() {
+        isPlayerPlaying = true;
+        const song = PLAYLIST_DATA[currentSongIndex];
+
+        // Xoay đĩa CD
+        const disc = document.getElementById('vinyl-disc');
+        if (disc) {
+            disc.classList.add('spinning');
+            disc.classList.remove('paused');
+        }
+
+        // Đổi nút Play sang Pause
+        const playBtn = document.getElementById('btn-song-play-toggle');
+        const playIcon = document.getElementById('play-state-icon');
+        if (playBtn) playBtn.classList.add('playing');
+        if (playIcon) playIcon.textContent = '❚❚';
+
+        // Cập nhật nút âm nhạc ở góc trên cùng
+        const topMusicBtn = document.getElementById('btn-music');
+        const topMusicLabel = document.getElementById('top-music-label');
+        if (topMusicBtn) topMusicBtn.classList.add('active');
+        if (topMusicLabel) topMusicLabel.textContent = 'Đang phát ♫';
+
+        updatePlaylistChipsActiveState();
+
+        // Phát file âm thanh hoặc fallback synthesizer
+        if (audioElement && !isUsingFallbackSynth) {
+            const playPromise = audioElement.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    // Trình duyệt chặn autoplay hoặc file không tồn tại
+                    startFallbackPlayback();
+                });
+            }
+        } else {
+            startFallbackPlayback();
+        }
+    }
+
+    function pauseSong() {
+        isPlayerPlaying = false;
+
+        // Dừng đĩa CD xoay
+        const disc = document.getElementById('vinyl-disc');
+        if (disc) {
+            disc.classList.add('paused');
+        }
+
+        // Đổi nút Pause sang Play
+        const playBtn = document.getElementById('btn-song-play-toggle');
+        const playIcon = document.getElementById('play-state-icon');
+        if (playBtn) playBtn.classList.remove('playing');
+        if (playIcon) playIcon.textContent = '▶';
+
+        // Cập nhật nút âm nhạc ở góc trên cùng
+        const topMusicBtn = document.getElementById('btn-music');
+        const topMusicLabel = document.getElementById('top-music-label');
+        if (topMusicBtn) topMusicBtn.classList.remove('active');
+        if (topMusicLabel) topMusicLabel.textContent = 'Âm nhạc';
+
+        updatePlaylistChipsActiveState();
+
+        if (audioElement && !isUsingFallbackSynth) {
+            audioElement.pause();
+        }
+
+        stopFallbackPlayback();
+    }
+
+    function togglePlayPause() {
+        if (isPlayerPlaying) {
+            pauseSong();
+        } else {
+            playSong();
+        }
+    }
+
+    function nextSong() {
+        loadSong(currentSongIndex + 1, true);
+        playChimeSound();
+    }
+
+    function prevSong() {
+        loadSong(currentSongIndex - 1, true);
+        playChimeSound();
+    }
+
+    function seekTo(seconds) {
+        const song = PLAYLIST_DATA[currentSongIndex];
+        const totalDur = (audioElement && audioElement.duration && !isNaN(audioElement.duration)) 
+            ? audioElement.duration 
+            : song.duration;
+
+        currentPlaybackTime = Math.max(0, Math.min(totalDur, seconds));
+
+        if (audioElement && !isUsingFallbackSynth) {
+            audioElement.currentTime = currentPlaybackTime;
+        }
+
+        updateTimelineUI();
+        syncLyrics(currentPlaybackTime);
+    }
+
+    // Chế độ phát âm thanh mô phỏng khi chưa có file MP3 (Đảm bảo 100% hoạt động mượt mà)
+    function startFallbackPlayback() {
+        isUsingFallbackSynth = true;
+        stopFallbackPlayback();
+
+        const song = PLAYLIST_DATA[currentSongIndex];
+        playSynthMelodyNote(song);
+
+        fallbackTimer = setInterval(() => {
+            if (!isPlayerPlaying) return;
+
+            currentPlaybackTime += 0.25;
+            updateTimelineUI();
+            syncLyrics(currentPlaybackTime);
+
+            // Mỗi 1.2s phát 1 nốt nhạc mộc
+            if (Math.floor(currentPlaybackTime * 4) % 5 === 0) {
+                playSynthMelodyNote(song);
+            }
+
+            if (currentPlaybackTime >= song.duration) {
+                nextSong();
+            }
+        }, 250);
+    }
+
+    function stopFallbackPlayback() {
+        if (fallbackTimer) {
+            clearInterval(fallbackTimer);
+            fallbackTimer = null;
         }
     }
 
     // -------------------------------------------------------------------
-    // 3. CANVAS HIỆU ỨNG CÁNH HOA RƠI (Petal Particles Simulation)
+    // 5. THANH ĐIỀU HƯỚNG TAB CHÍNH (VƯỜN LỜI CHÚC | GIAI ĐIỆU)
+    // -------------------------------------------------------------------
+    function initMainTabs() {
+        const tabWishesBtn = document.getElementById('tab-btn-wishes');
+        const tabMusicBtn = document.getElementById('tab-btn-music');
+        const paneWishes = document.getElementById('pane-wishes');
+        const paneMusic = document.getElementById('pane-music');
+
+        function switchTab(tabName) {
+            if (tabName === 'wishes') {
+                if (tabWishesBtn) tabWishesBtn.classList.add('active');
+                if (tabMusicBtn) tabMusicBtn.classList.remove('active');
+                if (paneWishes) paneWishes.style.display = 'block';
+                if (paneMusic) paneMusic.style.display = 'none';
+            } else if (tabName === 'music') {
+                if (tabMusicBtn) tabMusicBtn.classList.add('active');
+                if (tabWishesBtn) tabWishesBtn.classList.remove('active');
+                if (paneMusic) paneMusic.style.display = 'block';
+                if (paneWishes) paneWishes.style.display = 'none';
+
+                // Tự động căn chỉnh lời bài hát
+                setTimeout(() => {
+                    syncLyrics(currentPlaybackTime);
+                }, 100);
+            }
+            playChimeSound();
+        }
+
+        if (tabWishesBtn) {
+            tabWishesBtn.addEventListener('click', () => switchTab('wishes'));
+        }
+
+        if (tabMusicBtn) {
+            tabMusicBtn.addEventListener('click', () => switchTab('music'));
+        }
+
+        // Nút top nav "Âm nhạc": Mở Tab Nhạc và phát bài hát
+        const topMusicBtn = document.getElementById('btn-music');
+        if (topMusicBtn) {
+            topMusicBtn.addEventListener('click', () => {
+                switchTab('music');
+                if (!isPlayerPlaying) {
+                    playSong();
+                } else {
+                    pauseSong();
+                }
+            });
+        }
+    }
+
+    // -------------------------------------------------------------------
+    // 6. CANVAS HIỆU ỨNG CÁNH HOA RƠI (Petal Particles Simulation)
     // -------------------------------------------------------------------
     const canvas = document.getElementById('petal-canvas');
     let ctx = null;
@@ -267,12 +838,11 @@
             this.flipSpeed = 0.02 + Math.random() * 0.03;
             this.opacity = 0.4 + Math.random() * 0.45;
             
-            // Màu sắc cánh hoa dịu mắt: Hồng phớt, đào nhạt, vàng kem
             const colors = [
-                'rgba(242, 185, 196, ', // Hồng phấn dịu
-                'rgba(247, 210, 216, ', // Hồng kem nhạt
-                'rgba(255, 235, 238, ', // Trắng phớt hồng
-                'rgba(250, 226, 212, '  // Đào ấm
+                'rgba(242, 185, 196, ', 
+                'rgba(247, 210, 216, ', 
+                'rgba(255, 235, 238, ', 
+                'rgba(250, 226, 212, '  
             ];
             this.colorBase = colors[Math.floor(Math.random() * colors.length)];
         }
@@ -295,7 +865,6 @@
             c.scale(1, Math.cos(this.flip));
 
             c.beginPath();
-            // Vẽ cánh hoa hình giọt nước mềm mại
             c.moveTo(0, 0);
             c.bezierCurveTo(-this.size / 2, -this.size / 2, -this.size, this.size / 2, 0, this.size);
             c.bezierCurveTo(this.size, this.size / 2, this.size / 2, -this.size / 2, 0, 0);
@@ -346,7 +915,7 @@
 
     function renderLoop() {
         ctx.clearRect(0, 0, width, height);
-        wind *= 0.98; // Giảm dần lực gió
+        wind *= 0.98;
 
         for (let i = 0; i < petals.length; i++) {
             petals[i].update();
@@ -356,7 +925,6 @@
         requestAnimationFrame(renderLoop);
     }
 
-    // Hiệu ứng "Gieo hoa" khi bấm nút Bloom
     function triggerBloomBurst() {
         playChimeSound();
         const burstCount = 20;
@@ -372,17 +940,15 @@
     }
 
     // -------------------------------------------------------------------
-    // 4. PARSE URL PARAMETERS (Tự động điền tên người nhận & người gửi)
+    // 7. PARSE URL PARAMETERS (Cá nhân hóa lời chào)
     // -------------------------------------------------------------------
     let customRecipient = '';
     let customSender = '';
-    let customWish = '';
 
     function checkUrlParams() {
         const params = new URLSearchParams(window.location.search);
         customRecipient = params.get('to') || '';
         customSender = params.get('from') || '';
-        customWish = params.get('wish') || '';
 
         if (customRecipient) {
             const introRecipientText = document.getElementById('intro-recipient-text');
@@ -396,13 +962,13 @@
                 mainGreetingTitle.textContent = `Thân Gửi ${customRecipient} Nhân Ngày 20/10 🌸`;
             }
             if (mainPersonalizedNote && customSender) {
-                mainPersonalizedNote.textContent = `Một món quà nhỏ và những lời chúc bình an nhất được gửi trao từ ${customSender}.`;
+                mainPersonalizedNote.textContent = `Một món quà nhỏ, giai điệu ngọt ngào và những lời chúc bình an nhất từ ${customSender}.`;
             }
         }
     }
 
     // -------------------------------------------------------------------
-    // 5. RENDER CARDS GRID & FILTERING
+    // 8. RENDER THẺ LỜI CHÚC & FILTER TABS
     // -------------------------------------------------------------------
     function renderCards(filter = 'all') {
         const container = document.getElementById('cards-container');
@@ -455,7 +1021,7 @@
     }
 
     // -------------------------------------------------------------------
-    // 6. MODAL XEM CHI TIẾT LỜI CHÚC
+    // 9. MODAL CHI TIẾT LỜI CHÚC & RÚT QUẺ
     // -------------------------------------------------------------------
     let currentModalItem = null;
 
@@ -492,9 +1058,6 @@
         }
     }
 
-    // -------------------------------------------------------------------
-    // 7. RÚT QUẺ THÔNG ĐIỆP BẤT NGỜ (Random Wish Generator)
-    // -------------------------------------------------------------------
     function handleRandomWish() {
         const randomIndex = Math.floor(Math.random() * WISH_DATA.length);
         const item = WISH_DATA[randomIndex];
@@ -503,7 +1066,7 @@
     }
 
     // -------------------------------------------------------------------
-    // 8. TỰ TẠO THIỆP & XUẤT ẢNH PNG (Card Creator)
+    // 10. TỰ TẠO THIỆP & XUẤT ẢNH PNG
     // -------------------------------------------------------------------
     function openCreatorModal(presetWish = '') {
         playChimeSound();
@@ -552,7 +1115,6 @@
         document.getElementById('prev-flower').textContent = flower;
     }
 
-    // Xuất bưu thiếp ra ảnh PNG chuẩn đẹp bằng Canvas
     function downloadPostcardImage() {
         const recipient = document.getElementById('input-recipient').value.trim() || 'Người Phụ Nữ Dịu Dàng';
         const wish = document.getElementById('input-wish').value.trim() || 'Chúc bạn ngày 20/10 ngập tràn niềm vui, an yên và vạn sự như ý.';
@@ -570,11 +1132,9 @@
         exportCanvas.width = W;
         exportCanvas.height = H;
 
-        // 1. Nền giấy kem cổ điển
         c.fillStyle = '#FAF6F0';
         c.fillRect(0, 0, W, H);
 
-        // 2. Viền trang trí bưu thiếp đôi (Double Paper Border)
         c.lineWidth = 2;
         c.strokeStyle = '#E0D2C3';
         c.strokeRect(36, 36, W - 72, H - 72);
@@ -583,25 +1143,21 @@
         c.setLineDash([6, 6]);
         c.strokeStyle = '#D1BFAD';
         c.strokeRect(48, 48, W - 96, H - 96);
-        c.setLineDash([]); // Reset dash
+        c.setLineDash([]);
 
-        // 3. Con dấu ngày 20.10 ở góc trên phải
         c.fillStyle = '#C29A64';
         c.font = 'bold 20px "Quicksand", sans-serif';
         c.textAlign = 'right';
         c.fillText('✦ 20 • 10 • VIETNAM ✦', W - 70, 90);
 
-        // 4. Biểu tượng hoa lớn ở chính giữa phía trên
         c.font = '72px serif';
         c.textAlign = 'center';
         c.fillText(flower, W / 2, 190);
 
-        // 5. Header Tên người nhận
         c.fillStyle = '#3B3332';
         c.font = 'bold 36px "Lora", Georgia, serif';
         c.fillText(`Thân gửi ${recipient},`, W / 2, 280);
 
-        // 6. Dòng kẻ hoa văn nhỏ
         c.strokeStyle = '#C87A80';
         c.lineWidth = 2;
         c.beginPath();
@@ -609,7 +1165,6 @@
         c.lineTo(W / 2 + 80, 320);
         c.stroke();
 
-        // 7. Nội dung lời chúc (Tự động ngắt dòng thông minh)
         c.fillStyle = '#554746';
         c.font = 'italic 26px "Lora", Georgia, serif';
         const maxWidth = W - 180;
@@ -631,17 +1186,14 @@
         }
         c.fillText(line, W / 2, startY);
 
-        // 8. Chữ ký người gửi phong cách chữ viết tay
         c.fillStyle = '#BD4A4F';
         c.font = '36px "Caveat", cursive, sans-serif';
         c.fillText(`— ${sender} —`, W / 2, Math.max(startY + 90, 720));
 
-        // 9. Dấu watermark vintage ở dưới cùng
         c.fillStyle = '#A39290';
         c.font = '16px "Quicksand", sans-serif';
         c.fillText('NGÀY PHỤ NỮ VIỆT NAM • CHÚC BẠN LUÔN BÌNH YÊN & RẠNG RỠ', W / 2, H - 75);
 
-        // 10. Tải ảnh xuống máy
         try {
             const link = document.createElement('a');
             const safeName = recipient.replace(/[^a-zA-Z0-9à-ỹÀ-Ỹ]/g, '_');
@@ -655,7 +1207,6 @@
         }
     }
 
-    // Tạo link chia sẻ có param gửi người nhận
     function copyShareLink() {
         const recipient = document.getElementById('input-recipient').value.trim();
         const sender = document.getElementById('input-sender').value.trim();
@@ -674,9 +1225,7 @@
         });
     }
 
-    // -------------------------------------------------------------------
-    // 9. TOAST NOTIFICATION HELPER
-    // -------------------------------------------------------------------
+    // Toast thông báo
     let toastTimeout = null;
     function showToast(msg) {
         const toast = document.getElementById('toast');
@@ -692,16 +1241,13 @@
     }
 
     // -------------------------------------------------------------------
-    // 10. KHỞI TẠO TẤT CẢ TƯƠNG TÁC KHI TẢI TRANG
+    // 11. KHỞI TẠO TẤT CẢ TƯƠNG TÁC
     // -------------------------------------------------------------------
     function init() {
-        // Kiểm tra URL parameters
         checkUrlParams();
-
-        // Khởi động Canvas cánh hoa rơi
         initPetals();
 
-        // Mở phong bì tương tác
+        // Mở phong bì thư
         const envelopeTrigger = document.getElementById('envelope-trigger');
         const introOverlay = document.getElementById('intro-overlay');
         const mainContent = document.getElementById('main-content');
@@ -712,31 +1258,30 @@
                 if (envelope) envelope.classList.add('open');
                 playChimeSound();
 
-                // Tự động bật nhạc nhẹ nếu chưa bật
-                if (!isMusicPlaying) {
-                    toggleBackgroundMusic();
-                }
-
+                // Tự động phát bài hát đầu tiên
                 setTimeout(() => {
                     if (introOverlay) introOverlay.classList.add('hide');
                     if (mainContent) {
                         mainContent.style.display = 'block';
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
-                    // Bùng nổ thêm một đợt hoa chúc mừng
                     triggerBloomBurst();
+                    playSong();
                 }, 800);
             });
         }
 
-        // Render danh sách lời chúc ban đầu
+        // Khởi tạo tab chính (Vườn Lời Chúc & Giai Điệu)
+        initMainTabs();
+
+        // Khởi tạo Trình phát nhạc & Đồng bộ Lyric
+        initMusicStudio();
+
+        // Render Vườn Lời Chúc
         renderCards('all');
         setupCategoryTabs();
 
-        // Nút top nav
-        const btnMusic = document.getElementById('btn-music');
-        if (btnMusic) btnMusic.addEventListener('click', toggleBackgroundMusic);
-
+        // Nút Gieo hoa
         const btnBloom = document.getElementById('btn-bloom');
         if (btnBloom) btnBloom.addEventListener('click', triggerBloomBurst);
 
@@ -789,7 +1334,6 @@
             });
         }
 
-        // Lắng nghe thay đổi form tạo thiệp
         ['input-recipient', 'input-wish', 'input-sender'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', updateCardPreview);
@@ -810,14 +1354,12 @@
             });
         });
 
-        // Nút Tải ảnh & Nút Copy Link
         const btnDownloadCard = document.getElementById('btn-download-card');
         if (btnDownloadCard) btnDownloadCard.addEventListener('click', downloadPostcardImage);
 
         const btnCopyShareLink = document.getElementById('btn-copy-share-link');
         if (btnCopyShareLink) btnCopyShareLink.addEventListener('click', copyShareLink);
 
-        // Phím ESC đóng modal
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeWishModal();
@@ -826,11 +1368,9 @@
         });
     }
 
-    // Đợi DOM sẵn sàng
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
         init();
     }
 })();
-

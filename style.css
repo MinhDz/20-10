@@ -1002,14 +1002,659 @@ html, body {
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.toast-message.show {
-    transform: translateX(-50%) translateY(0);
+/* ===================================================================
+   THANH CHUYỂN TAB CHÍNH (VƯỜN LỜI CHÚC & GIAI ĐIỆU)
+   =================================================================== */
+.main-tabs-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-full);
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: var(--shadow-subtle);
+}
+
+.main-nav-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-full);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+}
+
+.main-nav-tab .tab-icon {
+    font-size: 1.1rem;
+}
+
+.main-nav-tab:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.main-nav-tab.active {
+    background: #FFFFFF;
+    color: var(--accent-rose);
+    box-shadow: 0 4px 15px rgba(200, 122, 128, 0.18);
+}
+
+.tab-badge {
+    font-size: 0.7rem;
+    padding: 2px 7px;
+    background: var(--accent-rose-light);
+    color: var(--accent-rose);
+    border-radius: var(--radius-full);
+    font-weight: 700;
+}
+
+.tab-pane {
+    animation: fadeInTab 0.5s ease-out;
+}
+
+@keyframes fadeInTab {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===================================================================
+   TRÌNH PHÁT NHẠC & LỜI BÀI HÁT ĐỒNG BỘ (ZINGMP3 STYLE)
+   Layout 2 cột đúng theo bản vẽ phác thảo của người dùng
+   =================================================================== */
+.music-player-section {
+    position: relative;
+    border-radius: var(--radius-lg);
+    padding: 6px;
+    margin-bottom: 45px;
+    overflow: hidden;
+}
+
+/* Lớp nền mờ nghệ thuật đồng bộ với màu sắc & ảnh bài hát đang phát */
+.player-ambient-backdrop {
+    position: absolute;
+    inset: -30px;
+    background: radial-gradient(circle at 25% 35%, var(--song-color, #E8B4B8) 0%, transparent 55%),
+                radial-gradient(circle at 75% 65%, var(--song-sub-color, #FAF2E8) 0%, transparent 60%);
+    filter: blur(50px);
+    opacity: 0.35;
+    pointer-events: none;
+    transition: background 0.8s ease, opacity 0.8s ease;
+    z-index: 1;
+}
+
+.music-studio-container {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(320px, 1fr) minmax(380px, 1.4fr);
+    gap: 24px;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
+    padding: 30px 26px;
+    box-shadow: var(--shadow-medium);
+}
+
+/* -------------------------------------------------------------------
+   CỘT TRÁI: Player Box & Controls (Theo bản vẽ phác thảo)
+   ------------------------------------------------------------------- */
+.studio-left-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Khung phát nhạc có đĩa xoay và tên bài hát có khung chữ nhật */
+.player-box {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: var(--bg-card-alt);
+    border: 2px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: var(--shadow-subtle);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.player-box:hover {
+    border-color: var(--border-accent);
+    box-shadow: var(--shadow-medium);
+}
+
+/* Đĩa xoay CD / Vinyl bên trái (Hình tròn trong bản vẽ) */
+.disc-outer {
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vinyl-disc {
+    width: 96px;
+    height: 96px;
+    background: radial-gradient(circle, #2d2625 25%, #1f1a19 70%, #151211 100%);
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 18px rgba(35, 25, 25, 0.25), inset 0 0 0 2px rgba(255, 255, 255, 0.15);
+    transition: transform 0.4s ease;
+}
+
+/* Rãnh đĩa than cổ điển */
+.disc-groove-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.disc-groove-ring.ring-1 {
+    width: 80px;
+    height: 80px;
+}
+
+.disc-groove-ring.ring-2 {
+    width: 62px;
+    height: 62px;
+}
+
+/* Nhãn tròn tâm đĩa hoa */
+.disc-art-center {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--song-center-bg, #F7E9EA);
+    border: 2px solid #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.disc-symbol {
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.disc-spindle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    border: 1px solid #777;
+    z-index: 3;
+}
+
+/* Hiệu ứng xoay tròn đĩa khi đang phát nhạc */
+.vinyl-disc.spinning {
+    animation: spinDisc 9s linear infinite;
+}
+
+.vinyl-disc.paused {
+    animation-play-state: paused;
+}
+
+@keyframes spinDisc {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Thông tin bài hát bên phải đĩa */
+.song-info-meta {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Khung chữ nhật bao quanh Tên bài hát (Đúng theo hình phác thảo) */
+.song-title-frame {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 2px solid var(--song-color, var(--text-primary));
+    border-radius: var(--radius-sm);
+    background: #FFFFFF;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+.active-song-title {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+.active-artist {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song-genre-tag {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background: var(--song-light-bg, var(--bg-subtle));
+    color: var(--song-color, var(--accent-rose));
+}
+
+/* Thanh thời gian (Seekbar) */
+.player-timeline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.time-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    min-width: 40px;
+}
+
+.time-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border-soft);
+    border-radius: var(--radius-full);
+    position: relative;
+    cursor: pointer;
+    transition: height 0.2s ease;
+}
+
+.time-track:hover {
+    height: 8px;
+}
+
+.time-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--song-color, var(--accent-rose));
+    border-radius: var(--radius-full);
+    transition: width 0.1s linear;
+}
+
+.time-thumb {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    background: #FFFFFF;
+    border: 2px solid var(--song-color, var(--accent-rose));
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.time-track:hover .time-thumb {
     opacity: 1;
+}
+
+/* 3 Nút điều khiển lớn (< [ ] > như hình vẽ) */
+.main-controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 8px 0;
+}
+
+.studio-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    color: var(--text-primary);
+}
+
+.btn-prev, .btn-next {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    font-size: 1.25rem;
+    box-shadow: var(--shadow-subtle);
+}
+
+.btn-prev:hover, .btn-next:hover {
+    transform: translateY(-2px);
+    background: #FFFFFF;
+    border-color: var(--song-color, var(--accent-rose));
+    color: var(--song-color, var(--accent-rose));
+    box-shadow: var(--shadow-medium);
+}
+
+/* Nút hình chữ nhật / vuông ở giữa như hình vẽ phác thảo */
+.btn-play-toggle {
+    width: 64px;
+    height: 52px;
+    background: var(--song-color, var(--accent-rose));
+    color: #FFFFFF;
+    border-radius: var(--radius-sm);
+    font-size: 1.4rem;
+    box-shadow: 0 6px 18px rgba(200, 122, 128, 0.35);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-play-toggle:hover {
+    transform: scale(1.06);
+    box-shadow: 0 8px 22px rgba(200, 122, 128, 0.45);
+}
+
+.btn-play-toggle.playing {
+    background: var(--accent-rose-hover);
+}
+
+/* Danh sách chọn bài nhanh (Playlist Chips) */
+.playlist-selector-box {
+    margin-top: 4px;
+    border-top: 1px dashed var(--border-soft);
+    padding-top: 16px;
+}
+
+.playlist-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.pl-heading {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pl-count {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.playlist-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pl-item-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: var(--transition);
+    text-align: left;
+}
+
+.pl-item-btn:hover {
+    border-color: var(--song-color, var(--accent-rose));
+    background: #FFFFFF;
+    transform: translateX(3px);
+}
+
+.pl-item-btn.active {
+    background: var(--song-light-bg, var(--accent-rose-light));
+    border-color: var(--song-color, var(--accent-rose));
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.pl-item-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pl-item-icon {
+    font-size: 1.1rem;
+}
+
+.pl-item-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.pl-item-artist {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.pl-playing-indicator {
+    font-size: 0.85rem;
+    color: var(--song-color, var(--accent-rose));
+    font-weight: 700;
+}
+
+/* -------------------------------------------------------------------
+   CỘT PHẢI: Khung hiển thị lời bài hát (ZingMP3 Synchronized Lyrics)
+   ------------------------------------------------------------------- */
+.studio-right-lyrics {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border: 2px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 24px 20px 18px;
+    box-shadow: var(--shadow-subtle);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Tiêu đề "Tên bài" ở giữa trên cùng (Đúng theo bản vẽ phác thảo) */
+.lyrics-header-bar {
+    text-align: center;
+    border-bottom: 1px solid var(--border-soft);
+    padding-bottom: 14px;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.lyrics-tag-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--song-color, var(--accent-rose));
+    background: var(--song-light-bg, var(--accent-rose-light));
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
+    margin-bottom: 8px;
+}
+
+.pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--song-color, var(--accent-rose));
+    animation: gentlePulse 1.5s infinite;
+}
+
+.lyrics-display-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.lyrics-display-artist {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Vùng cuộn lời bài hát (Hiệu ứng ZingMP3 Karaoke) */
+.lyrics-scroll-area {
+    height: 380px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    padding: 40px 10px 60px;
+    position: relative;
+    /* Làm mờ 2 đầu trên và dưới để câu hát ở giữa nổi bật như ZingMP3 */
+    mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+}
+
+/* Thanh cuộn tinh tế */
+.lyrics-scroll-area::-webkit-scrollbar {
+    width: 4px;
+}
+
+.lyrics-scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.lyrics-scroll-area::-webkit-scrollbar-thumb {
+    background: var(--border-soft);
+    border-radius: 4px;
+}
+
+.lyrics-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Từng dòng lyric */
+.lyric-line {
+    padding: 10px 14px;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform-origin: center center;
+    opacity: 0.42;
+    text-align: center;
+    user-select: none;
+}
+
+.lyric-line:hover {
+    color: var(--text-primary);
+    opacity: 0.8;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+/* HIỆU ỨNG ZINGMP3 KHI DÒNG ĐANG HÁT (ACTIVE) */
+.lyric-line.active {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--song-color, var(--accent-rose));
+    opacity: 1;
+    transform: scale(1.06);
+    text-shadow: 0 3px 16px var(--song-glow, rgba(200, 122, 128, 0.45));
+    background: var(--song-light-bg, rgba(247, 233, 234, 0.35));
+    border-radius: var(--radius-md);
+    letter-spacing: 0.2px;
+}
+
+/* Dòng kế tiếp hoặc vừa qua */
+.lyric-line.near-active {
+    opacity: 0.7;
+    font-size: 1.12rem;
+}
+
+/* Thanh chân trang lời bài hát */
+.lyrics-bottom-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px dashed var(--border-soft);
+    padding-top: 12px;
+    margin-top: 8px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.btn-theme-sound {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-full);
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-theme-sound:hover {
+    background: #FFFFFF;
+    color: var(--text-primary);
+    border-color: var(--border-accent);
 }
 
 /* ===================================================================
    RESPONSIVE DESIGN (TỐI ƯU CHO DI ĐỘNG & MỌI MÀN HÌNH)
    =================================================================== */
+@media (max-width: 860px) {
+    .music-studio-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px 16px;
+    }
+
+    .lyrics-scroll-area {
+        height: 320px;
+    }
+}
+
 @media (max-width: 640px) {
     .intro-box {
         padding: 30px 18px 26px;
@@ -1042,6 +1687,82 @@ html, body {
         padding: 60px 14px 40px;
     }
 
+    .main-tabs-nav {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .main-nav-tab {
+        padding: 8px 12px;
+        font-size: 0.88rem;
+    }
+
+    .player-box {
+        padding: 14px;
+        gap: 12px;
+    }
+
+    .disc-outer {
+        width: 80px;
+        height: 80px;
+    }
+
+    .vinyl-disc {
+        width: 76px;
+        height: 76px;
+    }
+
+    .disc-groove-ring.ring-1 {
+        width: 64px;
+        height: 64px;
+    }
+
+    .disc-groove-ring.ring-2 {
+        width: 50px;
+        height: 50px;
+    }
+
+    .disc-art-center {
+        width: 36px;
+        height: 36px;
+    }
+
+    .disc-symbol {
+        font-size: 1.1rem;
+    }
+
+    .active-song-title {
+        font-size: 1.02rem;
+    }
+
+    .active-artist {
+        font-size: 0.85rem;
+    }
+
+    .main-controls-row {
+        gap: 16px;
+    }
+
+    .btn-prev, .btn-next {
+        width: 42px;
+        height: 42px;
+        font-size: 1.1rem;
+    }
+
+    .btn-play-toggle {
+        width: 56px;
+        height: 46px;
+        font-size: 1.2rem;
+    }
+
+    .lyrics-display-title {
+        font-size: 1.25rem;
+    }
+
+    .lyric-line.active {
+        font-size: 1.18rem;
+    }
+
     .cards-grid {
         grid-template-columns: 1fr;
         gap: 16px;
@@ -1063,4 +1784,5 @@ html, body {
         width: 100%;
     }
 }
+
 
